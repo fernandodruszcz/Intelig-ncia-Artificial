@@ -1,4 +1,4 @@
-#include "operacoes_problema.h"
+#include <stdio.h>
 
 #define TAM 3
 #define MAX_MOVS 4

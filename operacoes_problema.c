@@ -3,16 +3,6 @@
 #define TAM 3
 #define MAX_MOVS 4
 
-struct posicao {
-    int x;
-    int y;
-};
-
-struct movimento {
-    struct posicao origens[4];
-    struct posicao destino;
-};
-
 void iniciaMatriz(int matriz[TAM][TAM]){
     for(int i = 0; i < TAM; i++){
         for(int j = 0; j < TAM; j++){
