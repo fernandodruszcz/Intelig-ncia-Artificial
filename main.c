@@ -1,28 +1,43 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-#include "operacoes_problema.h"
+//#include "operacoes_problema.h"
+#include "operacoes_lista_prioridade.h"
+int globalCounter = 0;
 
-struct no{
-    struct no *filhos;
-    struct no *pai;
-    int quantidadeMovimentos; // custo // g()
-    int quantidadeMovimentosAteFim; // heuristica // h()
-    int quantidadeMovimentosEsperada; // f() = g() + h()
-    int matrizEstadoAtual[TAM][TAM];
-};
 
-int h(int matriz[TAM][TAM]){
-    for(int i = 0; i < TAM; i++){
-        for(int j = 0; j < TAM; j++){
-            // se a peca nao estiver na posicao correta
-            if(matriz[i][j] != i*TAM + j){
-                
-            }
-        }
-    }
-}
+// int aEstrela(struct no *raiz, struct listaPrioridade *listaPrioridade){
+//     if(raiz -> quantidadeMovimentosAteFim == 0){
+//         printf("\n\nENCONTROU FIM\n\n");
+//         return 1;    
+//     } else {
+//         // expande o no
+//         printf("        Expandindo nó:\n");
+//         imprimeListaPrioridade(listaPrioridade);
+//         imprimeNo(*raiz);
+//         listaPrioridade = removePrimeiroListaPrioridade(listaPrioridade);
+//         fprintf(stderr, "        REMOVEU-SE\n");
+//         fprintf(stderr, "           %p\n", listaPrioridade);
+//         imprimeListaPrioridade(listaPrioridade);
+//         for(int i = 0; i < MAX_MOVS; i++){
+//             struct no *filho = criaFilho(raiz, i);
+//             if(filho != NULL){
+//                 raiz -> filhos[raiz -> quantidadeFilhos] = filho;
+//                 raiz -> quantidadeFilhos++;
+//                 fprintf(stderr, "       Criou filho\n");
+//                 imprimeNo(*filho);
+//                 insereListaPrioridade(listaPrioridade, filho);
+//             }
+//         }
+//         return aEstrela(listaPrioridade -> no, listaPrioridade);
+//     }
+//     printf("\n Não achou resposta \n");
+//     return 0;
+// }
 
-void main(){
+
+
+int main(){
     int matriz[TAM][TAM];
     iniciaMatriz(matriz);
 
@@ -32,11 +47,33 @@ void main(){
     imprimeMatriz(matriz);
     imprimeMovimentos(movimento);
 
-    for(int origem = 0; origem < MAX_MOVS; origem++){
-        printf("Movimento %d:\n", origem);
-        realizaMovimento(matriz, movimento, origem);
-        imprimeMatriz(matriz);
-        movimentosPossiveis(matriz, &movimento);
-    }
+    struct no raiz;
+    iniciaRaiz(&raiz, matriz);
+    imprimeNo(raiz);
 
+    struct listaPrioridade **comecoLista;
+	comecoLista = (struct listaPrioridade **)malloc(sizeof(struct listaPrioridade *));
+    inicializaLista(comecoLista, &raiz);
+    imprimeListaPrioridade(comecoLista);
+	//removePrimeiroListaPrioridade(comecoLista);
+	//imprimeListaPrioridade(comecoLista);
+
+	printf("\n\n\n");
+
+	for(int i = 0; i < MAX_MOVS; i++){
+		struct no *filho = criaFilho(&raiz, i);
+		if(filho != NULL){
+			raiz.filhos[raiz.quantidadeFilhos] = filho;
+			raiz.quantidadeFilhos++;
+			fprintf(stderr, "       Criou filho\n");
+			imprimeNo(*filho);
+			insereListaPrioridade(comecoLista, filho);
+		}
+	}
+
+	imprimeListaPrioridade(comecoLista);
+    //printf("\n\n COMEÇANDO \n\n");
+    //aEstrela(&raiz, &listaPrioridade);
+
+    return 0;
 }

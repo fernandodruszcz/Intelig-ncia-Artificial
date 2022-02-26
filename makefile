@@ -1,4 +1,4 @@
 all: main
 
 main:
-	gcc main.c operacoes_problema.c
+	gcc -Wall main.c operacoes_problema.c operacoes_no.c operacoes_lista_prioridade.c
