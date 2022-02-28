@@ -4,11 +4,14 @@
 #define MAX_MOVS 4
 
 void iniciaMatriz(int matriz[TAM][TAM]){
-    for(int i = 0; i < TAM; i++){
-        for(int j = 0; j < TAM; j++){
-            matriz[i][j] = (TAM - i)*TAM - j - 1;
-        }
-    }
+    // for(int i = 0; i < TAM; i++){
+    //     for(int j = 0; j < TAM; j++){
+    //         matriz[i][j] = (TAM - i)*TAM - j - 1;
+    //     }
+    // }
+    matriz[0][0] = 1; matriz[0][1] = 8; matriz[0][2] = 2;
+    matriz[1][0] = 0; matriz[1][1] = 4; matriz[1][2] = 3;
+    matriz[2][0] = 7; matriz[2][1] = 6; matriz[2][2] = 5;
 }
 
 void imprimeMatriz(int m[TAM][TAM]){

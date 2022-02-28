@@ -12,12 +12,14 @@ void atribuiEsperadoAteFim(struct no *no){
     int soma = 0;
     for(int i = 0; i < TAM; i++){
         for(int j = 0; j < TAM; j++){
-            // descobre a posicao que a peca deveria estar e soma a distancia em 'soma'
-            int x = no -> matrizEstadoAtual[i][j]/TAM;
-            int y = no -> matrizEstadoAtual[i][j] % TAM;
-            soma += abs(x - i) + abs(y - j);
-            //printf("A peça %d que deveria estar em %d,%d está em %d,%d. Distância %d\n",
-            //                no -> matrizEstadoAtual[i][j], x, y, i, j, soma);
+            if(no -> matrizEstadoAtual[i][j] != 0){
+                // descobre a posicao que a peca deveria estar e soma a distancia em 'soma'
+                int x = no -> matrizEstadoAtual[i][j]/TAM;
+                int y = no -> matrizEstadoAtual[i][j] % TAM;
+                soma += abs(x - i) + abs(y - j);
+                //printf("A peça %d que deveria estar em %d,%d está em %d,%d. Distância %d\n",
+                //                no -> matrizEstadoAtual[i][j], x, y, i, j, soma);
+            }
         }
     }
     no -> quantidadeMovimentosAteFim = soma;
@@ -56,11 +58,11 @@ struct no * criaFilho(struct no *pai, int origemMovimento){
         struct no *filho = (struct no *)malloc(sizeof(struct no));
         filho -> pai = pai;
         copiaMatriz(pai -> matrizEstadoAtual, filho -> matrizEstadoAtual);
+        realizaMovimento(filho -> matrizEstadoAtual, pai -> movimentosPossiveis, origemMovimento);
         atribuiCusto(filho);
         atribuiEsperadoAteFim(filho);
         atribuiTotalEsperado(filho);
 
-        realizaMovimento(filho -> matrizEstadoAtual, pai -> movimentosPossiveis, origemMovimento);
 
         movimentosPossiveis(filho -> matrizEstadoAtual, &(filho -> movimentosPossiveis));
         return filho;
