@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define TAM 3
+#define TAM 4
 #define MAX_MOVS 4
 
 struct posicao {

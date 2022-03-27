@@ -1,17 +1,15 @@
 #include "operacoes_problema.h"
 
-#define TAM 3
-#define MAX_MOVS 4
-
 void iniciaMatriz(int matriz[TAM][TAM]){
     // for(int i = 0; i < TAM; i++){
     //     for(int j = 0; j < TAM; j++){
     //         matriz[i][j] = (TAM - i)*TAM - j - 1;
     //     }
     // }
-    matriz[0][0] = 1; matriz[0][1] = 8; matriz[0][2] = 2;
-    matriz[1][0] = 0; matriz[1][1] = 4; matriz[1][2] = 3;
-    matriz[2][0] = 7; matriz[2][1] = 6; matriz[2][2] = 5;
+    matriz[0][0] = 0; matriz[0][1] = 1; matriz[0][2] = 2; matriz[0][3] = 3;
+    matriz[1][0] = 5; matriz[1][1] = 6; matriz[1][2] = 7; matriz[1][3] = 4;
+    matriz[2][0] = 9; matriz[2][1] = 10; matriz[2][2] = 11; matriz[2][3] = 8;
+    matriz[3][0] = 13; matriz[3][1] = 14; matriz[3][2] = 12; matriz[3][3] = 15;
 }
 
 void imprimeMatriz(int m[TAM][TAM]){
