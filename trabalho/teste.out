@@ -1,0 +1,50 @@
+1 2 3 4 5 
+1 6 6 4 4 
+1 6 1 4 7 
+1 1 1 8 9 
+Nó id: 1 cor: 2 tam: 7
+Vizinhos: 
+	id: 2 cor: 3 tam: 1 qtde_viz: 3
+	id: 6 cor: 1 tam: 3 qtde_viz: 4
+	id: 4 cor: 3 tam: 4 qtde_viz: 6
+	id: 8 cor: 1 tam: 1 qtde_viz: 3
+Nó id: 2 cor: 3 tam: 1
+Vizinhos: 
+	id: 3 cor: 2 tam: 1 qtde_viz: 3
+	id: 6 cor: 1 tam: 3 qtde_viz: 4
+	id: 1 cor: 2 tam: 7 qtde_viz: 4
+Nó id: 3 cor: 2 tam: 1
+Vizinhos: 
+	id: 4 cor: 3 tam: 4 qtde_viz: 6
+	id: 6 cor: 1 tam: 3 qtde_viz: 4
+	id: 2 cor: 3 tam: 1 qtde_viz: 3
+Nó id: 4 cor: 3 tam: 4
+Vizinhos: 
+	id: 5 cor: 2 tam: 1 qtde_viz: 1
+	id: 7 cor: 2 tam: 1 qtde_viz: 2
+	id: 8 cor: 1 tam: 1 qtde_viz: 3
+	id: 1 cor: 2 tam: 7 qtde_viz: 4
+	id: 6 cor: 1 tam: 3 qtde_viz: 4
+	id: 3 cor: 2 tam: 1 qtde_viz: 3
+Nó id: 5 cor: 2 tam: 1
+Vizinhos: 
+	id: 4 cor: 3 tam: 4 qtde_viz: 6
+Nó id: 6 cor: 1 tam: 3
+Vizinhos: 
+	id: 2 cor: 3 tam: 1 qtde_viz: 3
+	id: 3 cor: 2 tam: 1 qtde_viz: 3
+	id: 4 cor: 3 tam: 4 qtde_viz: 6
+	id: 1 cor: 2 tam: 7 qtde_viz: 4
+Nó id: 7 cor: 2 tam: 1
+Vizinhos: 
+	id: 4 cor: 3 tam: 4 qtde_viz: 6
+	id: 9 cor: 3 tam: 1 qtde_viz: 2
+Nó id: 8 cor: 1 tam: 1
+Vizinhos: 
+	id: 4 cor: 3 tam: 4 qtde_viz: 6
+	id: 9 cor: 3 tam: 1 qtde_viz: 2
+	id: 1 cor: 2 tam: 7 qtde_viz: 4
+Nó id: 9 cor: 3 tam: 1
+Vizinhos: 
+	id: 7 cor: 2 tam: 1 qtde_viz: 2
+	id: 8 cor: 1 tam: 1 qtde_viz: 3

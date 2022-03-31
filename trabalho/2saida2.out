@@ -1,0 +1,58 @@
+2 3 2 3 2 
+2 1 1 3 3 
+2 1 2 3 2 
+2 2 2 1 3 
+-1 -2 -3 -4 -5 
+-1 -6 -6 -4 -4 
+-1 -6 -1 -4 -7 
+-1 -1 -1 -8 -9 
+1 2 3 4 5 
+1 6 6 4 4 
+1 6 1 4 7 
+1 1 1 8 9 
+Vizinhos do nó 1 1 11:
+i c t
+2 3 1
+6 1 3
+4 3 4
+8 1 1
+Vizinhos do nó 2 3 1:
+i c t
+3 2 1
+6 1 3
+1 2 7
+Vizinhos do nó 3 2 1:
+i c t
+4 3 4
+6 1 3
+2 3 1
+Vizinhos do nó 4 3 4:
+i c t
+5 2 1
+7 2 1
+8 1 1
+1 2 7
+6 1 3
+3 2 1
+Vizinhos do nó 5 2 1:
+i c t
+4 3 4
+Vizinhos do nó 6 1 3:
+i c t
+2 3 1
+3 2 1
+4 3 4
+1 2 7
+Vizinhos do nó 7 2 1:
+i c t
+4 3 4
+9 3 1
+Vizinhos do nó 8 1 1:
+i c t
+4 3 4
+9 3 1
+1 2 7
+Vizinhos do nó 9 3 1:
+i c t
+7 2 1
+8 1 1

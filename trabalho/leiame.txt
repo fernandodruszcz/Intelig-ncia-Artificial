@@ -1,0 +1,12 @@
+    Para solucionar o problema decidimos implementar, em C++, uma busca usando o A*. 
+    Para economizar memória, cada estado da árvore de busca possui apenas os passos 
+que foram tomados para chegar até aquele ponto e o valor da função f daquele estado.
+    Com essa representação guardamos apenas os nós que estão abertos numa fila de 
+prioridade e cada vez que expandimos um estado calculamos f e adicionamos o passo tomado
+para atingi-lo.
+    Para calcular a heuristica de f utilizamos a seguinte estratégia. Enquanto não tivermos
+chego ao ponto n,m da matriz, calculamos a distância que estamos de n,m da seguinte forma:
+encontramos os blocos adjacentes ao bloco principal e desses blocos pegamos aquele que 
+possui o ponto x,y mais próximo de n,m para repetir o processo até chegar no bloco que
+contenha n,m, cada passo que tomarmos nesse processo adiciona 1 à heurística. Após chegarmos
+em n,m mudamos a heurística para uma gulosa.

@@ -12,7 +12,7 @@ class No_grafo {
         int cor;
         int x;
         int y;
-        vector <No_grafo> vizinhos;
+        vector <No_grafo*> vizinhos;
         
         No_grafo(){};
         No_grafo(int _id, int _tam_bloco, int _cor){
@@ -24,6 +24,125 @@ class No_grafo {
 
 vector <No_grafo> lista_nos;
 int id_grafo = 0;
+
+void imprime_grafo(vector <No_grafo> grafo){
+    vector <No_grafo>::iterator no;
+    for(no = grafo.begin(); no != grafo.end(); no++){
+        cout << "Vizinhos do nó " << no->id << " " << no->cor << " " << no->tam_bloco << ":\n";
+        vector <No_grafo*>::iterator viz;
+        cout << "i c t\n";
+        for(viz = no->vizinhos.begin(); viz != no->vizinhos.end(); viz++){
+            cout << (*viz)->id << " " << &*viz << " " << (*viz)->cor << " " << (*viz)->tam_bloco << "\n";
+            cout << "\t" << (*viz)->vizinhos.size() << "\n";
+        }
+    }
+}
+
+class Estado_busca {
+    public:
+        vector <No_grafo> grafo;
+        int custo;
+        int heuristica;
+        int custo_esperado; // = custo + heuristica
+        Estado_busca* e_pai;
+        vector <Estado_busca> e_filhos;
+        vector <int> jogadas_possiveis;
+
+        Estado_busca(){};
+        Estado_busca(Estado_busca* _pai, vector <No_grafo> _grafo, int _jogada){
+            //custo = _pai->custo + 1;
+            copia_grafo(_grafo);
+            imprime_grafo(grafo);
+            cout << "***********\n";
+            jogar(_jogada);
+            heuristica = calcula_heuristica();
+            custo_esperado = custo + heuristica;
+            atribui_jogadas_possiveis();
+        };
+
+        void copia_grafo(vector <No_grafo> original){
+            No_grafo* no;
+
+            // copia os nos
+            vector <No_grafo>::iterator it;
+            for(it = original.begin(); it != original.end(); it++){
+                no = new No_grafo(it->id, it->tam_bloco, it->cor);
+                grafo.push_back(*no);
+            }
+
+            // atribui os vizinhos
+            for(int i = 0; i < original.size(); i++){
+
+                cout << "Atribuindo vizinhos de " << grafo[i].id << "\n";
+                vector <No_grafo*>::iterator vizinho;
+                for(vizinho = original[i].vizinhos.begin(); vizinho != original[i].vizinhos.end(); vizinho++){
+                    vector <No_grafo>::iterator v;
+                    v = find_if(    grafo.begin(), 
+                                    grafo.end(), 
+                                    [&vizinho](const No_grafo& obj) {return obj.id == (*vizinho)->id;});
+                    grafo[i].vizinhos.push_back(&*v);
+                    cout << v->id << " " << &*v << "\n";
+                }
+            }
+            cout << "*****\n";
+            imprime_grafo(grafo);
+            cout << "*****\n";
+        };
+
+        void jogar(int cor){
+            // muda cor do no principal
+            grafo[0].cor = cor;
+
+            //
+            // junta nos da mesma cor
+            //
+
+            // adicionar vizinhos do no juntado
+            // alterar vizinhos do no juntado (tirar no juntado, adicionar no principal)
+            // liberar no juntado
+            vector <No_grafo*>::iterator it;
+            for(it = grafo[0].vizinhos.begin(); it != grafo[0].vizinhos.end(); it++){
+                cout << "Olhando it " << (*it)->id << " Qtde viz " << (*it)->vizinhos.size() << "\n";
+                if((*it)->cor == cor){
+                    grafo[0].tam_bloco += (*it)->tam_bloco;
+
+                    cout << "qtde vizinhos " << (*it)->vizinhos.size() << "\n";
+                    vector <No_grafo*>::iterator viz;
+                    for(viz = (*it)->vizinhos.begin(); viz != (*it)->vizinhos.end(); viz++){
+                        cout << "Vizinho " << (*viz)->id << "\n";
+            // TODO: consertar essa merda
+            // Cuidar pra nao adicionar o nó principal duas vezes no vizinho 
+                        // remove no juntado de seus vizinhos
+                        vector <No_grafo*>::iterator a = remove_if((*viz)->vizinhos.begin(), (*viz)->vizinhos.end(),
+                                    [&it](No_grafo* obj){return obj->id == (*it)->id;});
+                        // cerr << "PEi\n";
+                        // cout << "Removeu " << (*a)->id << "\n";
+                        // cerr << "easjiea\n";
+                        // adiciona nó principal aos vizinhos do nó juntado
+                        (*viz)->vizinhos.push_back(&grafo[0]);
+                        // adiciona vizinhos do no juntado ao no principal
+                        grafo[0].vizinhos.push_back(*viz);
+                    }
+                }
+            }
+
+        };
+
+        void atribui_jogadas_possiveis(){
+            // vector <No_grafo *>::iterator it;
+            // for(it = grafo[0].vizinhos.begin(); it != grafo[0].vizinhos.end(); it++){
+            //     int cor = it->cor;
+            //     vector <int>::iterator jah_inseriu = find_if(jogadas_possiveis.begin(), jogadas_possiveis.end(),
+            //                                                 [&cor](const int& obj){return obj == cor;});
+            //     if (jah_inseriu == jogadas_possiveis.end())
+            //         jogadas_possiveis.push_back(cor);
+            // }
+        };
+
+        int calcula_heuristica(){
+            return 0;
+        };
+};
 
 int n, // numero de linhas do tabuleiro
     m, // numero de colunas do tabuleiro
@@ -49,6 +168,8 @@ void imprime_matriz(int **tab, int n, int m){
 		cout << "\n";
 	}
 }
+
+
 
 int marca_bloco(int x, int y, int marcacao){
     //fprintf(stderr, "Olhando %d,%d valor %d\n", x,y, tab[x][y]);
@@ -105,6 +226,8 @@ void cria_nos_iniciais(){
     }
 }
 
+
+// encontra o id dos vizinhos do bloco em x,y
 void identifica_vizinhanca(int x, int y, int marcacao, vector <int>* lista){
     tab[x][y] = -marcacao;
     vector <int>::iterator it;
@@ -158,38 +281,52 @@ void identifica_vizinhanca(int x, int y, int marcacao, vector <int>* lista){
 void atribui_vizinhanca(){
     vector <No_grafo>::iterator no;
     for(no = lista_nos.begin(); no != lista_nos.end(); no++){
+
+        // encontra o id dos vizinhos
         vector <int> lista_id_vizinhos;
         identifica_vizinhanca(no->x, no->y, -(no->id), &lista_id_vizinhos);
 
+        // encontra o endereco de cada vizinho e atribui
         vector <No_grafo>::iterator vizinho;
         for(const int& i : lista_id_vizinhos){
             vizinho = find_if(  lista_nos.begin(), 
                                 lista_nos.end(), 
                                 [&i](const No_grafo& obj) {return obj.id == i;});
-            no->vizinhos.push_back(*vizinho);
+            no->vizinhos.push_back(&*vizinho);
         }
     }
 }
 
 void copia_grafo(vector <No_grafo> original, vector <No_grafo>* novo){
     No_grafo* no;
+
+    // copia os nos
     vector <No_grafo>::iterator it;
     for(it = original.begin(); it != original.end(); it++){
         no = new No_grafo(it->id, it->tam_bloco, it->cor);
         novo->push_back(*no);
     }
     
-    // Com todos os nos criados eh preciso atribuir os vizinhos dos novos nos
+    // atribui os vizinhos
     for(int i = 0; i < original.size(); i++){
-        vector <No_grafo>::iterator vizinho;
+        vector <No_grafo*>::iterator vizinho;
         for(vizinho = original[i].vizinhos.begin(); vizinho != original[i].vizinhos.end(); vizinho++){
             vector <No_grafo>::iterator v;
             v = find_if(  novo->begin(), 
                           novo->end(), 
-                          [&vizinho](const No_grafo& obj) {return obj.id == vizinho->id;});
-            (*novo)[i].vizinhos.push_back(*v);
+                          [&vizinho](const No_grafo& obj) {return obj.id == (*vizinho)->id;});
+            (*novo)[i].vizinhos.push_back(&*v);
         }
     }
+}
+
+void inicia_busca(){
+    Estado_busca* raiz;
+    raiz = new Estado_busca(NULL, lista_nos, 3);
+
+    imprime_grafo(raiz->grafo);
+
+
 }
 
 int main(){
@@ -210,8 +347,8 @@ int main(){
     // }
     
 
-    vector <No_grafo> nova_lista;
-    copia_grafo(lista_nos, &nova_lista);
+    // vector <No_grafo> nova_lista;
+    // copia_grafo(lista_nos, &nova_lista);
 
     // for(int i = 0; i < lista_nos.size(); i++){
     //     cout << "Nó " << lista_nos[i].id << " " << nova_lista[i].id << " " << &lista_nos[i] 
@@ -222,6 +359,7 @@ int main(){
     //     }    
     // }
 
+    inicia_busca();
 
 
     return 0;
